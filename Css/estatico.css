@@ -1,0 +1,28 @@
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(to top, #87cefa, #b0e0e6);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  canvas {
+    display: block;
+  }
+  
+  #info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .force-label {
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
