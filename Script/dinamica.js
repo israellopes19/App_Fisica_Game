@@ -14,7 +14,7 @@ let block = {
   accelerationX: 0,
   forceX: 0,
   jumpForce: 0,
-  friction: 2.0, // aumentei de 0.5 para 1.2
+  friction: 1.2, // aumentei de 0.5 para 1.2
   isJumping: false,
   isChargingJump: false
 };
