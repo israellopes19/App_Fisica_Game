@@ -13,7 +13,7 @@ h1{
 body{
     background-color: darkcyan;
     display: grid;
-    grid-template-columns: 90px 90px 90px 90px;
+    grid-template-columns: 110px 110px 110px 110px;
     gap: 40px;
     place-content: center;
     height: 100vh;
@@ -27,8 +27,8 @@ body{
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    width: 120px;
-    height: 100px;
+    width: 140px;
+    height: 120px;
     border: 0px solid white;
     border-radius: 25%;
     color: black;
@@ -41,7 +41,7 @@ body{
 
 
 .container:hover{
-    background-color: #6d7580;
+    background-color:gold;
     color: white;
 }
 
