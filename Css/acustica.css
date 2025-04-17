@@ -1,3 +1,20 @@
+a {
+    width: 55px;
+    height: 25px;
+    border: solid 4px rgb(185, 182, 182);
+    background-color: rgb(107, 119, 190);
+    text-decoration: none;
+    color: rgb(247, 243, 243);
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    
+  
+  
+  
+  }
+  
+
 body {
     background-color: #ccf2ff;
     font-family: Arial, sans-serif;

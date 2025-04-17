@@ -1,3 +1,20 @@
+a {
+    width: 55px;
+    height: 25px;
+    border: solid 4px rgb(185, 182, 182);
+    background-color: rgb(107, 119, 190);
+    text-decoration: none;
+    color: rgb(247, 243, 243);
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    
+  
+  
+  
+  }
+  
+
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +36,7 @@
   
   #instructions {
     position: absolute;
-    top: 10px;
+    top: 25px;
     left: 10px;
     color: white;
     background: rgba(0, 0, 50, 0.6);

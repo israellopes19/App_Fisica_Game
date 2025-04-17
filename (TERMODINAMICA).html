@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio da Termodinâmica</title>
+  <link rel="stylesheet" href="Css/termodinamica.css">
+</head>
+<body>
+    <a href="jogos.html">Voltar</a>
+
+  <div id="painel">
+    <h2>Desafio da Termodinâmica 🔥❄️</h2>
+    <p>Controle a temperatura de um gás e observe as partículas em movimento!</p>
+    <div id="botoes">
+      <button onclick="alterarTemperatura('aumentar')">Aumentar Temperatura</button>
+      <button onclick="alterarTemperatura('diminuir')">Diminuir Temperatura</button>
+    </div>
+    <p>Temperatura Atual: <span id="tempDisplay">25</span>°C</p>
+  </div>
+
+  <canvas id="canvasGás"></canvas>
+
+  <script src="Script/termodinamica.js"></script>
+</body>
+</html>
