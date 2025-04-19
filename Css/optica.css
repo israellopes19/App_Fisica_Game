@@ -1,46 +1,49 @@
 a {
-    width: 55px;
-    height: 25px;
-    border: solid 4px rgb(185, 182, 182);
-    background-color: rgb(107, 119, 190);
-    text-decoration: none;
-    color: rgb(247, 243, 243);
-    position: absolute;
-    top: 0%;
-    left: 0%;
-    
-  
-  
-  
-  }
+  width: 55px;
+  height: 25px;
+  border: solid 4px rgb(185, 182, 182);
+  background-color: rgb(107, 119, 190);
+  text-decoration: none;
+  color: rgb(247, 243, 243);
+  position: absolute;
+  top: 0%;
+  left: 0%;
   
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background: linear-gradient(to bottom, #001f3f, #004080);
-    overflow: hidden;
-  }
-  
-  canvas {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: crosshair;
-  }
-  
-  #instructions {
-    position: absolute;
-    top: 25px;
-    left: 10px;
-    color: white;
-    background: rgba(0, 0, 50, 0.6);
-    padding: 10px;
-    border-radius: 20px;
-    font-family: sans-serif;
-  }
+
+
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background: radial-gradient(#001f3f, #000814);
+  font-family: sans-serif;
+}
+
+#controls {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 0 5px;
+  font-size: 16px;
+  border: none;
+  background-color: #005eff;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #003bbd;
+}
+
+canvas {
+  display: block;
+}

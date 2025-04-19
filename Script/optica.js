@@ -1,227 +1,157 @@
-const canvas = document.getElementById("gameCanvas");
+// === CONFIGURAÇÃO INICIAL ===
+const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Fundo animado
-const stars = Array.from({ length: 100 }, () => ({
-  x: Math.random() * canvas.width,
-  y: Math.random() * canvas.height,
-  r: Math.random() * 1.5 + 0.5
-}));
-
-function drawStars() {
-  ctx.fillStyle = "#ffffff22";
-  for (let star of stars) {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-    ctx.fill();
-  }
+// === ESTRELAS NO FUNDO ===
+const stars = [];
+for (let i = 0; i < 150; i++) {
+  stars.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 2,
+    speed: Math.random() * 0.5 + 0.2
+  });
 }
 
-class Mirror {
-  constructor(x, y, length, angle) {
-    this.x = x;
-    this.y = y;
-    this.length = length;
-    this.angle = angle;
-  }
+// === FOGUETE ===
+const rocket = {
+  x: 100,
+  y: canvas.height / 2,
+  width: 50,
+  height: 30,
+  speed: 10,
+  dy: 0
+};
 
-  draw() {
-    ctx.save();
-    ctx.translate(this.x, this.y);
-    ctx.rotate(this.angle);
-    ctx.strokeStyle = "silver";
-    ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.moveTo(-this.length / 2, 0);
-    ctx.lineTo(this.length / 2, 0);
-    ctx.stroke();
-    ctx.restore();
-  }
+// === RAIOS DE LUZ ===
+const rays = [];
 
-  getEndpoints() {
-    const dx = Math.cos(this.angle);
-    const dy = Math.sin(this.angle);
-    return {
-      x1: this.x - dx * this.length / 2,
-      y1: this.y - dy * this.length / 2,
-      x2: this.x + dx * this.length / 2,
-      y2: this.y + dy * this.length / 2,
-    };
-  }
-
-  isMouseNear(mx, my) {
-    return Math.hypot(this.x - mx, this.y - my) < 50;
-  }
-}
-
-class Ray {
-  constructor(x, y, dx, dy) {
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.path = [];
-  }
-
-  reflect(mirrors) {
-    let px = this.x;
-    let py = this.y;
-    let dx = this.dx;
-    let dy = this.dy;
-
-    this.path = [{ x: px, y: py }];
-
-    for (let i = 0; i < 10; i++) {
-      let closest = null;
-      let closestDist = Infinity;
-      let normal = null;
-
-      for (let mirror of mirrors) {
-        const { x1, y1, x2, y2 } = mirror.getEndpoints();
-        const denom = dx * (y1 - y2) - dy * (x1 - x2);
-        if (Math.abs(denom) < 0.001) continue;
-
-        const t = ((px - x1) * (y1 - y2) - (py - y1) * (x1 - x2)) / denom;
-        const u = ((px - x1) * dy - (py - y1) * dx) / denom;
-
-        if (t > 0 && u >= 0 && u <= 1) {
-          const ix = px + dx * t;
-          const iy = py + dy * t;
-          const dist = t;
-
-          if (dist < closestDist) {
-            closestDist = dist;
-            closest = { x: ix, y: iy };
-
-            const mx = x2 - x1;
-            const my = y2 - y1;
-            const len = Math.hypot(mx, my);
-            normal = { x: -my / len, y: mx / len };
-          }
-        }
-      }
-
-      if (closest) {
-        this.path.push(closest);
-        const dot = dx * normal.x + dy * normal.y;
-        dx = dx - 2 * dot * normal.x;
-        dy = dy - 2 * dot * normal.y;
-        px = closest.x;
-        py = closest.y;
-      } else {
-        this.path.push({ x: px + dx * 200, y: py + dy * 200 });
-        break;
-      }
-    }
-  }
-
-  draw() {
-    ctx.strokeStyle = "yellow";
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(this.path[0].x, this.path[0].y);
-    for (let point of this.path.slice(1)) {
-      ctx.lineTo(point.x, point.y);
-    }
-    ctx.stroke();
-  }
-}
-
-const mirrors = [
-  new Mirror(500, 300, 150, Math.PI / 4),
-  new Mirror(800, 400, 150, -Math.PI / 6),
+// === ALVOS GRANDES ===
+const targets = [
+  { x: canvas.width * 0.6, y: canvas.height * 0.1, radius: 100, hit: false },
+  { x: canvas.width * 0.75, y: canvas.height * 0.6, radius: 10, hit: false },
+  { x: canvas.width * 0.55, y: canvas.height * 0.5, radius: 50, hit: false }
 ];
 
-const ray = new Ray(800, 500, 1, 0.2);
-const crystal = { x: 1100, y: 300, r: 30 };
+// === CONTROLE POR BOTÕES ===
+document.getElementById("upButton").onclick = () => rocket.dy = -rocket.speed;
+document.getElementById("downButton").onclick = () => rocket.dy = rocket.speed;
+document.getElementById("fireButton").onclick = () => {
+  rays.push({
+    x: rocket.x + rocket.width,
+    y: rocket.y + rocket.height / 2,
+    dx: 10
+  });
+};
 
-let selectedMirror = null;
-let isRotating = false;
-let offsetX = 0;
-let offsetY = 0;
-
-canvas.addEventListener("mousedown", e => {
-  const mx = e.clientX;
-  const my = e.clientY;
-
-  for (let mirror of mirrors) {
-    if (mirror.isMouseNear(mx, my)) {
-      selectedMirror = mirror;
-      if (e.shiftKey) {
-        isRotating = true;
-      } else {
-        offsetX = mx - mirror.x;
-        offsetY = my - mirror.y;
-      }
-      break;
+// === FUNÇÃO: DESENHAR ESTRELAS ===
+function drawStars() {
+  ctx.fillStyle = "white";
+  stars.forEach(star => {
+    ctx.beginPath();
+    ctx.arc(star.x, star.y, star.size, 0, 2 * Math.PI);
+    ctx.fill();
+    star.x -= star.speed;
+    if (star.x < 0) {
+      star.x = canvas.width;
+      star.y = Math.random() * canvas.height;
     }
-  }
-});
+  });
+}
 
-canvas.addEventListener("mousemove", e => {
-  if (selectedMirror) {
-    if (isRotating) {
-      const dx = e.clientX - selectedMirror.x;
-      const dy = e.clientY - selectedMirror.y;
-      selectedMirror.angle = Math.atan2(dy, dx);
-    } else {
-      selectedMirror.x = e.clientX - offsetX;
-      selectedMirror.y = e.clientY - offsetY;
-    }
-  }
-});
-
-canvas.addEventListener("mouseup", () => {
-  selectedMirror = null;
-  isRotating = false;
-});
-
-function drawCrystal() {
+// === FUNÇÃO: DESENHAR FOGUETE ===
+function drawRocket() {
+  ctx.fillStyle = "#ff6600";
   ctx.beginPath();
-  ctx.arc(crystal.x, crystal.y, crystal.r, 0, Math.PI * 2);
-  ctx.fillStyle = "cyan";
-  ctx.shadowColor = "white";
-  ctx.shadowBlur = 15;
+  ctx.moveTo(rocket.x, rocket.y);
+  ctx.lineTo(rocket.x, rocket.y + rocket.height);
+  ctx.lineTo(rocket.x + rocket.width, rocket.y + rocket.height / 2);
+  ctx.closePath();
   ctx.fill();
 }
 
-function checkHit(ray) {
-  for (let p of ray.path) {
-    if (Math.hypot(p.x - crystal.x, p.y - crystal.y) < crystal.r) return true;
-  }
-  return false;
+// === FUNÇÃO: MOVER FOGUETE ===
+function moveRocket() {
+  rocket.y += rocket.dy;
+  rocket.dy = 0;
+  if (rocket.y < 0) rocket.y = 0;
+  if (rocket.y + rocket.height > canvas.height) rocket.y = canvas.height - rocket.height;
 }
 
-let showMessage = false;
-let messageTimer = 0;
+// === FUNÇÃO: DESENHAR ALVOS ===
+function drawTargets() {
+  targets.forEach(target => {
+    ctx.beginPath();
+    ctx.arc(target.x, target.y, target.radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = target.hit ? "#ffff00" : "#ff0000";
+    ctx.lineWidth = 8;
+    ctx.stroke();
 
-function draw() {
+    // Efeito de explosão visual
+    if (target.hit) {
+      ctx.fillStyle = "rgba(255, 255, 0, 0.1)";
+      ctx.beginPath();
+      ctx.arc(target.x, target.y, target.radius + 30, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+  });
+}
+
+// === FUNÇÃO: DESENHAR RAIOS ===
+function drawRays() {
+  ctx.strokeStyle = "yellow";
+  ctx.lineWidth = 2;
+
+  for (let i = 0; i < rays.length; i++) {
+    const ray = rays[i];
+    ray.x += ray.dx;
+
+    ctx.beginPath();
+    ctx.moveTo(ray.x, ray.y);
+    ctx.lineTo(ray.x + 100, ray.y);
+    ctx.stroke();
+
+    // Verifica colisão com alvos
+    targets.forEach(target => {
+      if (!target.hit) {
+        const dx = ray.x - target.x;
+        const dy = ray.y - target.y;
+        if (Math.sqrt(dx * dx + dy * dy) < target.radius) {
+          target.hit = true;
+        }
+      }
+    });
+
+    // Remove o raio se sair da tela
+    if (ray.x > canvas.width) {
+      rays.splice(i, 1);
+      i--;
+    }
+  }
+}
+
+// === FUNÇÃO: VERIFICAR VITÓRIA ===
+function checkWin() {
+  if (targets.every(t => t.hit)) {
+    ctx.fillStyle = "white";
+    ctx.font = "48px sans-serif";
+    ctx.fillText("Você é um bom atirador!!", canvas.width / 2 - 150, canvas.height / 2);
+  }
+}
+
+// === FUNÇÃO: ANIMAÇÃO CONTÍNUA ===
+function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawStars();
-
-  for (let mirror of mirrors) mirror.draw();
-
-  ray.reflect(mirrors);
-  ray.draw();
-  drawCrystal();
-
-  if (checkHit(ray)) {
-    showMessage = true;
-    messageTimer = 120;
-  }
-
-  if (showMessage && messageTimer > 0) {
-    ctx.font = "bold 42px sans-serif";
-    ctx.fillStyle = "#00ff99";
-    ctx.shadowColor = "black";
-    ctx.shadowBlur = 10;
-    ctx.fillText("✨ Cristal Energizado!", canvas.width / 2 - 200, 80);
-    messageTimer--;
-  }
-
-  requestAnimationFrame(draw);
+  moveRocket();
+  drawRocket();
+  drawTargets();
+  drawRays();
+  checkWin();
+  requestAnimationFrame(animate);
 }
 
-draw();
+// === INICIAR JOGO ===
+animate();

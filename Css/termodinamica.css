@@ -1,6 +1,6 @@
 a {
-    width: 55px;
-    height: 25px;
+    width: 50px;
+    height: 20px;
     border: solid 4px rgb(185, 182, 182);
     background-color: rgb(107, 119, 190);
     text-decoration: none;
@@ -55,3 +55,14 @@ body {
     height: 100vh;
   }
   
+
+  #painel {
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    color: white;
+    background: rgba(0, 0, 50, 0.6);
+    padding: 5px;
+    border-radius: 5px;
+    font-family: sans-serif;
+  }
