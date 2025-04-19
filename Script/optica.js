@@ -32,7 +32,9 @@ const rays = [];
 const targets = [
   { x: canvas.width * 0.6, y: canvas.height * 0.1, radius: 100, hit: false },
   { x: canvas.width * 0.75, y: canvas.height * 0.6, radius: 10, hit: false },
-  { x: canvas.width * 0.55, y: canvas.height * 0.5, radius: 50, hit: false }
+  { x: canvas.width * 0.55, y: canvas.height * 0.4, radius: 30, hit: false },
+  { x: canvas.width * 0.25, y: canvas.height * 0.3, radius: 20, hit: false },
+  { x: canvas.width * 0.15, y: canvas.height * 0.2,radius: 80, hit: false }
 ];
 
 // === CONTROLE POR BOTÕES ===
