@@ -1,0 +1,45 @@
+a {
+  width: 48px;
+  height: 20px;
+  border: solid 4px rgb(185, 182, 182);
+  background-color: rgb(107, 119, 190);
+  text-decoration: none;
+  color: rgb(247, 243, 243);
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  
+
+
+
+}
+
+body {
+  
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(to top, #87cefa, #b0e0e6);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  canvas {
+    display: block;
+  }
+  
+  #info {
+    position: absolute;
+    top: 40px;
+    left: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .force-label {
+    color: #000;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  

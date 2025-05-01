@@ -1,0 +1,55 @@
+a {
+  width: 50px;
+  height: 20px;
+  border: solid 4px rgb(185, 182, 182);
+  background-color: rgb(107, 119, 190);
+  text-decoration: none;
+  color: rgb(247, 243, 243);
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  
+
+
+
+}
+
+
+body {
+  background: #001f3f;
+  overflow: hidden;
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  position: relative;
+  width: 80%;
+  height: 60%;
+  border: 2px solid white;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.molecule {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #00d4ff;
+  transition: all 0.5s ease;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+input[type="range"] {
+  width: 300px;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Css/mru.css">
+
+<body>
+
+  <a href="jogos.html">Voltar</a>
+
+      <header>🏁 Jogo do Movimento Retilíneo Uniforme (MRU)</header>
+    
+      <div class="controls">
+        <div class="control">
+          <label for="velocidade">Velocidade (v) m/s</label><br>
+          <input type="range" id="velocidade" min="1" max="50" value="10">
+          <div><span id="velocidadeValor">10</span> m/s</div>
+        </div>
+    
+        <div class="control">
+          <label for="tempo">Tempo (t) s</label><br>
+          <input type="range" id="tempo" min="1" max="10" value="5">
+          <div><span id="tempoValor">5</span> s</div>
+        </div>
+      </div>
+    
+      <button class="start-btn" onclick="iniciar()">🚗 Iniciar Movimento</button>
+    
+      <div class="game-area">
+        <div class="cloud" style="top: 50px;"></div>
+        <div class="cloud" style="top: 100px;"></div>
+        <div class="object" id="objeto"></div>
+        <div class="ground"></div>
+      </div>
+    
+      <div class="result" id="resultado">Posição final: S = S₀ + v × t</div>
+   
+      <script src="Script/mru.js"></script>
+  </body>
+</html>

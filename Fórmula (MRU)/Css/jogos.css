@@ -1,0 +1,51 @@
+
+
+h1{
+    font-family: 'MedievalSharp', cursive;
+    font-size: 3em;
+    color: #D4AF37; /* dourado */
+    text-shadow: 2px 2px 4px #000000;
+    position: absolute;
+    justify-content: space-around;
+  
+}
+
+body{
+    background-color: darkcyan;
+    display: grid;
+    grid-template-columns: 130px 130px 130px 130px;
+    gap: 40px;
+    place-content: center;
+    height: 100vh;
+}
+
+
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    width: 160px;
+    height: 140px;
+    border: 0px solid white;
+    border-radius: 25%;
+    color: black;
+    font-weight: bold;
+    background-color: white;
+    text-decoration: none;
+   
+  }
+
+
+
+.container:hover{
+    background-color:gold;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(3, 18, 236);
+}

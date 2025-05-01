@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio Eletromagnético 2D</title>
+  <link rel="stylesheet" href="Css/eletromagnetismo.css">
+</head>
+<body>
+    <a href="jogos.html">Voltar</a>
+
+  <div id="info">
+    <h2>Desafio Eletromagnético 2D</h2>
+    <p>Use os botões para conduzir a partícula até a meta!</p>
+    <div id="controls">
+      <button onclick="changeField('left')">Campo Baixo</button>
+      <button onclick="changeField('right')">Campo Cima</button>
+      <button onclick="changeField('up')">Campo Esquerdo</button>
+      <button onclick="changeField('down')">Campo Direito</button>
+    </div>
+  </div>
+  <canvas id="gameCanvas"></canvas>
+  <script src="Script/eletromagnetismo.js"></script>
+</body>
+</html>
