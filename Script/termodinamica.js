@@ -1,56 +1,61 @@
-// termo.js
-const canvas = document.getElementById("canvasGás");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+const container = document.getElementById('container');
+const tempSlider = document.getElementById('temperature');
+const tempValue = document.getElementById('tempValue');
 
-let temperatura = 25;
-const tempDisplay = document.getElementById("tempDisplay");
+const molecules = [];
+const numMolecules = 50;
 
-const particulas = [];
-for (let i = 0; i < 100; i++) {
-  particulas.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    vx: (Math.random() - 0.5) * 2,
-    vy: (Math.random() - 0.5) * 2,
-    raio: 5 + Math.random() * 2,
-    cor: "#ffab00"
+// Criar moléculas
+for (let i = 0; i < numMolecules; i++) {
+  const mol = document.createElement('div');
+  mol.classList.add('molecule');
+  mol.style.left = Math.random() * container.offsetWidth + 'px';
+  mol.style.top = Math.random() * container.offsetHeight + 'px';
+  container.appendChild(mol);
+  molecules.push(mol);
+}
+
+// Atualizar posição e cor baseado na temperatura
+function updateMolecules(temp) {
+  temp = Math.max(0, temp); // Garante que nunca seja menor que 0
+
+
+
+
+
+
+  molecules.forEach(mol => {
+    // COR da molécula de acordo com temperatura
+    if (temp >= 300){
+      mol.style.background="black"; // Preto
+    } else if (temp >= 200) {
+      mol.style.background = "#8B0000"; // Vermelho escuro
+    } else if (temp >= 100) {
+      mol.style.background = "red"; // Vermelho vivo
+    } else {
+      mol.style.background = "#00d4ff"; // Azul claro (normal)
+    }
+
+    // MOVIMENTO das moléculas
+    if (temp === 0) {
+      mol.style.left = (container.offsetWidth / 2 + Math.random() * 10 - 5) + 'px';
+      mol.style.top = (container.offsetHeight / 2 + Math.random() * 10 - 5) + 'px';
+    } else {
+      const spread = (temp / 2);
+      mol.style.left = (container.offsetWidth / 2 + (Math.random() - 0.5) * spread * 4) + 'px';
+      mol.style.top = (container.offsetHeight / 2 + (Math.random() - 0.5) * spread * 4) + 'px';
+    }
   });
 }
 
-function alterarTemperatura(acao) {
-  if (acao === "aumentar") temperatura += 5;
-  else if (acao === "diminuir") temperatura -= 5;
-  tempDisplay.textContent = temperatura;
-}
+tempSlider.addEventListener('input', () => {
+  const temp = parseInt(tempSlider.value);
+  tempValue.textContent = temp;
+  updateMolecules(temp);
+});
 
-function atualizarParticulas() {
-  let velocidadeBase = temperatura / 25;
-
-  for (let p of particulas) {
-    p.x += p.vx * velocidadeBase;
-    p.y += p.vy * velocidadeBase;
-
-    if (p.x <= 0 || p.x >= canvas.width) p.vx *= -1;
-    if (p.y <= 0 || p.y >= canvas.height) p.vy *= -1;
-  }
-}
-
-function desenharParticulas() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  for (let p of particulas) {
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.raio, 0, Math.PI * 2);
-    ctx.fillStyle = p.cor;
-    ctx.fill();
-  }
-}
-
-function animar() {
-  atualizarParticulas();
-  desenharParticulas();
-  requestAnimationFrame(animar);
-}
-
-animar();
+// Atualizar automaticamente para simular o movimento
+setInterval(() => {
+  const temp = parseInt(tempSlider.value);
+  updateMolecules(temp);
+}, 1000);

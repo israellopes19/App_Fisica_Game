@@ -1,6 +1,6 @@
 a {
-  width: 55px;
-  height: 25px;
+  width: 60px;
+  height: 30px;
   border: solid 4px rgb(185, 182, 182);
   background-color: rgb(107, 119, 190);
   text-decoration: none;
@@ -15,35 +15,61 @@ a {
 }
 
 body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
   margin: 0;
-  overflow: hidden;
-  background: radial-gradient(#001f3f, #000814);
-  font-family: sans-serif;
 }
 
-#controls {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
+
+.game-container {
+  width: 550px;
+  text-align: center;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.illusion-container img {
+  width: 100%;
+  max-width: 600px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.illusion-container img:hover {
+  transform: scale(1.05);
 }
 
 button {
+  margin-top: 20px;
   padding: 10px 20px;
-  margin: 0 5px;
   font-size: 16px;
-  border: none;
-  background-color: #005eff;
+  background-color: #4CAF50;
   color: white;
-  border-radius: 10px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #003bbd;
+  background-color: #45a049;
 }
 
-canvas {
-  display: block;
+.info-panel {
+  margin-top: 30px;
+  font-size: 18px;
+  color: #333;
+}
+
+h1 {
+  color: #333;
+}
+
+h2 {
+  color: #555;
 }

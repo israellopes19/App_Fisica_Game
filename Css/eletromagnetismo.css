@@ -47,7 +47,7 @@ body {
   }
   
   button:hover {
-    background-color: #01579b;
+    background-color: #9b3f01;
   }
   
   canvas {
@@ -59,8 +59,9 @@ body {
 
   #info {
     position: absolute;
-    top: 10px;
-    left: 350px;
+    width: 180px;
+    height: 220px;
+    top: 30px;
     background: rgba(255, 255, 255, 0.9);
     padding: 16px;
     border-radius: 10px;
@@ -70,10 +71,10 @@ body {
 
   #controls {
     position: absolute;
-    width: 500px;
-    height: 50px;
-    top: 150px;
-    left: 100px;
+    width: 100px;
+    height: 240px;
+    top: -2px;
+    left: 215px;
     background: rgba(255, 255, 255, 0.9);
     padding: 6px;
     border-radius: 10px;

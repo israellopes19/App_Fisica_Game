@@ -2,24 +2,20 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Desafio da Termodinâmica</title>
+  <title>Simulação de Moléculas e Temperatura</title>
   <link rel="stylesheet" href="Css/termodinamica.css">
 </head>
 <body>
-    <a href="jogos.html">Voltar</a>
+  <a href="jogos.html">Voltar</a>
 
-  <div id="painel">
-    <h2>Desafio da Termodinâmica 🔥❄️</h2>
-    <p>Controle a temperatura de um gás e observe as partículas em movimento!</p>
-    <div id="botoes">
-      <button onclick="alterarTemperatura('aumentar')">Aumentar Temperatura</button>
-      <button onclick="alterarTemperatura('diminuir')">Diminuir Temperatura</button>
-    </div>
-    <p>Temperatura Atual: <span id="tempDisplay">25</span>°C</p>
-  </div>
+<h1>Moléculas e Temperatura</h1>
+<div class="container" id="container"></div>
 
-  <canvas id="canvasGás"></canvas>
+<div class="controls">
+  <label>Temperatura: <span id="tempValue">0</span>°C</label><br>
+  <input type="range" id="temperature" min="0" max="300" value="0">
+</div>
 
-  <script src="Script/termodinamica.js"></script>
+<script src="Script/termodinamica.js"></script>
 </body>
 </html>

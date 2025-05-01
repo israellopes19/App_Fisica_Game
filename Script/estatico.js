@@ -104,3 +104,4 @@ canvas.addEventListener("touchend", () => {
 });
 
 animate();
+
