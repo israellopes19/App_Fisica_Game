@@ -13,7 +13,7 @@ h1{
 body{
     background-color: darkcyan;
     display: grid;
-    grid-template-columns: 130px 130px 130px 130px;
+    grid-template-columns: 150px 150px 150px 150px;
     gap: 40px;
     place-content: center;
     height: 100vh;
@@ -27,8 +27,8 @@ body{
     align-items: center;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    width: 160px;
-    height: 140px;
+    width: 180px;
+    height: 160px;
     border: 0px solid white;
     border-radius: 25%;
     color: black;
