@@ -74,34 +74,38 @@ function animate() {
 
 let selectedBlock = null;
 
-canvas.addEventListener("touchstart", (e) => {
+canvas.addEventListener("mousedown", (e) => {
   const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
-  const touchX = touch.clientX - rect.left;
-  const touchY = touch.clientY - rect.top;
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
   blocks.forEach((block) => {
     if (
-      touchX > block.x - 20 &&
-      touchX < block.x + 20 &&
-      touchY > block.y - 20 &&
-      touchY < block.y + 20
+      mouseX > block.x - 20 &&
+      mouseX < block.x + 20 &&
+      mouseY > block.y - 20 &&
+      mouseY < block.y + 20
     ) {
       selectedBlock = block;
     }
   });
 });
 
-canvas.addEventListener("touchmove", (e) => {
+canvas.addEventListener("mousemove", (e) => {
   if (selectedBlock) {
     const rect = canvas.getBoundingClientRect();
-    const touch = e.touches[0];
-    selectedBlock.x = touch.clientX - rect.left;
+    selectedBlock.x = e.clientX - rect.left;
   }
 });
 
-canvas.addEventListener("touchend", () => {
+canvas.addEventListener("mouseup", () => {
+  selectedBlock = null;
+});
+
+canvas.addEventListener("mouseleave", () => {
   selectedBlock = null;
 });
 
 animate();
+
 
